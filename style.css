@@ -1,0 +1,23 @@
+/* 기본: 메뉴를 가로 방향으로 정렬 */
+.nav-container{
+    display: flex;
+}
+.nav-menu {
+  display: flex;
+  flex-direction: row;         /* 기본: 가로 정렬 */
+  gap: 20px;                   /* 메뉴 사이 간격 */
+  justify-content: center;     /* 가운데 정렬 (선택) */
+  padding: 10px;
+  background-color: #f0f0f0;
+}
+.nav menu a {
+    color: white;
+}
+/* 조건 2: 480px 이하일 때 세로 방향 정렬 */
+@media (max-width: 480px) {
+  .nav-menu {
+    flex-direction: column;     /* 세로 정렬 */
+    align-items: center;        /* 세로일 때 가운데 정렬 (선택) */
+  }
+}
+
