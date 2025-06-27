@@ -1,0 +1,155 @@
+@import "./reset.css";
+
+body {
+  background-color: #000;
+  color: white;
+  font-family: 'Arial', sans-serif;
+}
+
+
+.site-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: black;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+.logo img {
+  width: 40px;
+}
+.nav-menu {
+  display: flex;
+  gap: 1.5rem;
+}
+.nav-menu a {
+  color: white;
+  font-weight: bold;
+}
+.nav-menu a.active {
+  color: #00ff44;
+}
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 24px;
+  height: 18px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+.hamburger span {
+  height: 3px;
+  background-color: white;
+  border-radius: 2px;
+}
+
+/* 반응형 메뉴 */
+@media (max-width: 850px) {
+  .nav-menu {
+    display: none;
+    flex-direction: column;
+    background-color: #111;
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    padding: 1rem;
+    border-radius: 6px;
+  }
+  .nav-menu.show {
+    display: flex;
+  }
+  .hamburger {
+    display: flex;
+  }
+}
+
+
+.generation-title {
+  text-align: center;
+  margin: 2rem 0 1rem;
+  font-size: 2rem;
+}
+
+/*메인*/
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  padding: 0 2rem 3rem;
+  width: 100%;
+  max-width: 1200px; 
+  margin: 0 auto; 
+}
+@media (max-width: 850px) {
+  .card-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 600px) {
+  .card-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+.card {
+  background-color: #333;
+  padding: 1rem;
+  border-radius: 10px;
+  transition: transform 0.2s;
+  width: 100%;
+  max-width: 100%;
+}
+.card:hover {
+  transform: translateY(-2px);
+}
+.profile-img {
+  width: 50%;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  border-radius: 50%;
+  transition: transform 0.3s ease;
+}
+.card:hover .profile-img {
+  transform: scale(1.05);
+}
+.card-info {
+  margin-top: 1rem;
+}
+.top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+.name {
+  font-weight: bold;
+}
+.badge {
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  color: white;
+}
+.major {
+  background-color: #007acc;
+}
+.non-major {
+  background-color: #d63c1d;
+}
+.quote {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+}
+.icon {
+  font-size: 1.2rem;
+}
+.hamburger.active {
+  transform: scaleY(0.7);
+}
