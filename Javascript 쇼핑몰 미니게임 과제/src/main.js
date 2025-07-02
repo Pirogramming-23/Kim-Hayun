@@ -22,10 +22,29 @@ function displayItems(items) {
   `;
 }
 
+function setEventListeners(items) {
+  const logo = document.querySelector('.logo');
+  const buttons = document.querySelector('.buttons');
+
+  logo.addEventListener('click', () => displayItems(items));
+  buttons.addEventListener('click', event => onButtonClick(event, items));
+}
+
+// Handle button 클릭
+function onButtonClick(event, items) {
+  const target = event.target;
+  const key = target.dataset.key;
+  const value = target.dataset.value;
+
+  if (key == null || value == null) {
+    return;
+  }
+  const filtered = items.filter(item => item[key] === value);
+  displayItems(filtered);
+}
 loadItems()
     .then(items=>{
-        console.log(items);
         displayItems(items);
-        // setEventListeners(items)
+        setEventListeners(items)
     })
     .catch(console.log);
