@@ -46,7 +46,7 @@ body{
 .logo:hover{
   transform: scale(1.1);
 }
-.imgBtn{
+.imgbtn{
   width: var(--size-button);
   height: var(--size-button);
 }
@@ -89,12 +89,12 @@ body{
   margin-bottom: var(--base-space);
 }
 
-.item__thumbnail{
+.item_thumbnail{
   width: var(--size-thumbnail);
   height: var(--size-thumbnail);
 }
 
-.item__description{
+.item_description{
   margin-left: var(--base-space);
   font-size: var(--font-size);
 }
