@@ -4,13 +4,17 @@ const numberInputs = [
     document.getElementById('number2'),
     document.getElementById('number3')
 ];
+const submitButton = document.querySelector('.submit-button');
 const resultsContainer = document.getElementById('results');
+const resultImage = document.getElementById('game-result-img');
 
 let answer;
 let attempts;
+let isGameOver;
 
 function initializeGame() {
     attempts = 9;
+    isGameOver = false;
     attemptsDisplay.textContent = attempts;
     
     answer = [];
@@ -23,6 +27,9 @@ function initializeGame() {
 
     clearInputs();
     resultsContainer.innerHTML = '';
+    resultImage.src = '';
+    resultImage.style.display = 'none';
+    submitButton.disabled = false;
 }
 
 function clearInputs() {
@@ -31,6 +38,8 @@ function clearInputs() {
 }
 
 function check_numbers() {
+    if (isGameOver) return;
+
     const userGuess = numberInputs.map(input => parseInt(input.value, 10));
     if (userGuess.some(isNaN)) {
         alert('숫자 3개를 모두 입력해주세요.');
@@ -53,8 +62,21 @@ function check_numbers() {
     const resultDiv = document.createElement('div');
     resultDiv.textContent = `[${userGuess.join(', ')}] 결과: ${strikes}S ${balls}B`;
     resultsContainer.appendChild(resultDiv);
-    
-    clearInputs();
+
+    if (strikes === 3) {
+        endGame(true);
+    } else if (attempts <= 0) {
+        endGame(false);
+    } else {
+        clearInputs();
+    }
+}
+
+function endGame(isWin) {
+    isGameOver = true;
+    submitButton.disabled = true;
+    resultImage.style.display = 'block';
+    resultImage.src = isWin ? 'success.png' : 'fail.png';
 }
 
 initializeGame();
