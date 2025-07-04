@@ -98,3 +98,49 @@ button:active {
   box-shadow: inset 4px 4px 8px rgba(163, 177, 198, 0.6), inset -4px -4px 8px rgba(255, 255, 255, 0.5);
 }
 
+
+.record-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 5px;
+  color: #3D4A3D;
+  font-size: 1.2em;
+  font-family: 'Courier New', Courier, monospace;
+  border-bottom: 1px solid rgba(61, 74, 61, 0.1);
+}
+
+.record-item:last-child { border-bottom: none; }
+
+.record-checkbox {
+  appearance: none;
+  background-color: #E0E5EC;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid #C8D2C8;
+  cursor: pointer;
+  position: relative;
+  box-shadow: 4px 4px 8px rgba(163, 177, 198, 0.6), -4px -4px 8px rgba(255, 255, 255, 0.5);
+}
+
+.record-checkbox:checked {
+  background-color: #8da18d;
+  box-shadow: inset 2px 2px 4px rgba(61, 74, 61, 0.6);
+}
+
+.record-text {
+  flex-grow: 1;
+  text-align: center;
+}
+
+.delete-record-btn {
+  background: none;
+  border: none;
+  box-shadow: none;
+  font-size: 1.2em;
+  cursor: pointer;
+  color: #555;
+  padding: 0;
+}
+
