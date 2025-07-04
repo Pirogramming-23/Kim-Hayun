@@ -21,11 +21,11 @@ startStopBtn.addEventListener('click', () => {
       elapsedTime = Date.now() - startTime;
       stopwatchDisplay.textContent = formatTime(elapsedTime);
     }, 10);
-    startStopBtn.textContent = '정지';
+    startStopBtn.textContent = 'stop';
     isRunning = true;
   } else {
     clearInterval(stopwatchInterval);
-    startStopBtn.textContent = '시작';
+    startStopBtn.textContent = 'start';
     isRunning = false;
   }
-}
+})
