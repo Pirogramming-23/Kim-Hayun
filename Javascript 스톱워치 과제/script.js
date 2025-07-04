@@ -5,6 +5,8 @@ const resetBtn = document.getElementById('reset-btn');
 
 const recordBtn = document.getElementById('record-btn');
 const recordList = document.getElementById('record-list');
+const selectAllBtn = document.getElementById('select-all-btn');
+const deleteSelectedBtn = document.getElementById('delete-selected-btn');
 
 let isRunning = false;
 let startTime = 0;
@@ -47,7 +49,12 @@ recordBtn.addEventListener('click', () => {
  if (elapsedTime === 0) return; 
 
   const li =document.createElement('li');
+  const currentTime = formatTime(elapsedTime);
   li.className='record-item';
-  li.textContent=formatTime(elapsedTime);
+  li.innerHTML = `
+  <input type="checkbox" class="record-checkbox">
+  <span class="record-text">${currentTime}</span>
+  <button class="delete-record-btn">🗑️</button>
+  `;
   recordList.prepend(li);
 });
