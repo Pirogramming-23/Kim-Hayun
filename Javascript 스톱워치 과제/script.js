@@ -1,6 +1,9 @@
 const stopwatchDisplay = document.getElementById('stopwatch-display');
 const startStopBtn = document.getElementById('start-stop-btn');
 
+const resetBtn = document.getElementById('reset-btn');
+
+
 let isRunning = false;
 let startTime = 0;
 let elapsedTime = 0;
@@ -28,4 +31,12 @@ startStopBtn.addEventListener('click', () => {
     startStopBtn.textContent = 'start';
     isRunning = false;
   }
+})
+
+resetBtn.addEventListener('click',()=>{
+  clearInterval(stopwatchInterval);
+  isRunning=false;
+  elapsedTime=0;
+  stopwatchDisplay.textContent="00:00:00";
+  startStopBtn.textContent="start";
 })
