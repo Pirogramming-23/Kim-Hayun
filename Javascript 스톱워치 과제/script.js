@@ -3,6 +3,8 @@ const startStopBtn = document.getElementById('start-stop-btn');
 
 const resetBtn = document.getElementById('reset-btn');
 
+const recordBtn = document.getElementById('record-btn');
+const recordList = document.getElementById('record-list');
 
 let isRunning = false;
 let startTime = 0;
@@ -40,3 +42,12 @@ resetBtn.addEventListener('click',()=>{
   stopwatchDisplay.textContent="00:00:00";
   startStopBtn.textContent="start";
 })
+
+recordBtn.addEventListener('click', () => {
+ if (elapsedTime === 0) return; 
+
+  const li =document.createElement('li');
+  li.className='record-item';
+  li.textContent=formatTime(elapsedTime);
+  recordList.prepend(li);
+});
