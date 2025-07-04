@@ -56,5 +56,21 @@ recordBtn.addEventListener('click', () => {
   <span class="record-text">${currentTime}</span>
   <button class="delete-record-btn">🗑️</button>
   `;
+  li.querySelector('.delete-record-btn').addEventListener('click', (e) => {
+    e.target.closest('.record-item').remove();
+  });
   recordList.prepend(li);
+});
+
+selectAllBtn.addEventListener('click', () => {
+  const checkboxes = document.querySelectorAll('.record-checkbox');
+  const allChecked = checkboxes.length > 0 && Array.from(checkboxes).every(cb => cb.checked);
+  checkboxes.forEach(cb => cb.checked = !allChecked);
+});
+
+deleteSelectedBtn.addEventListener('click', () => {
+  const checked = document.querySelectorAll('.record-checkbox:checked');
+  checked.forEach(cb => {
+    cb.closest('.record-item').remove();
+  });
 });
