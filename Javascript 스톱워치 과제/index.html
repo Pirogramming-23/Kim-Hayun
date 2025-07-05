@@ -8,20 +8,39 @@
 </head>
 <body>
     <div class="container">
-        <h1> ⏱️ 피로그래밍 스톱워치</h1>
-        <div id="stopwatch-section">
-          <div id="stopwatch-display" class="display">00:00:00</div>
-          <div class="buttons">
-            <button id="start-stop-btn">start</button>
-            <button id="record-btn">record</button>
-            <button id="reset-btn">reset</button>
-          </div>
-          <div class="record-controls">
-            <button id="select-all-btn">전체 선택</button>
-            <button id="delete-selected-btn">선택 삭제</button>
-          </div>
-          <ul id="record-list" class="record-list"></ul>
-         </div> 
+        <div class="tab-buttons">
+            <button id="stopwatch-tab" class="tab-button active">스톱워치</button>
+            <button id="timer-tab" class="tab-button">타이머</button>
+        </div>
+
+        <div id="stopwatch-section" class="tab-content active">
+            <h1>⏱️ 피로그래밍 스톱워치</h1>
+            <div id="stopwatch-display" class="display">00:00:00</div>
+            <div class="buttons">
+                <button id="start-stop-btn">start</button>
+                <button id="record-btn">record</button>
+                <button id="reset-btn">reset</button>
+            </div>
+            <div class="record-controls">
+                <button id="select-all-btn">전체 선택</button>
+                <button id="delete-selected-btn">선택 삭제</button>
+            </div>
+            <ul id="record-list" class="record-list"></ul>
+        </div>
+
+        <div id="timer-section" class="tab-content">
+            <h1>⏳ 피로그래밍 타이머</h1>
+            <div id="timer-display" class="display">00:00:00</div>
+            <div class="timer-inputs">
+                <input type="number" id="hours" min="0" placeholder="시">
+                <input type="number" id="minutes" min="0" max="59" placeholder="분">
+                <input type="number" id="seconds" min="0" max="59" placeholder="초">
+            </div>
+            <div class="buttons">
+                <button id="start-timer-btn">start</button>
+                <button id="reset-timer-btn">reset</button>
+            </div>
+        </div>
     </div>
     <script src="script.js"></script>
 </body>

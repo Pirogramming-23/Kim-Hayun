@@ -8,6 +8,18 @@ const recordList = document.getElementById('record-list');
 const selectAllBtn = document.getElementById('select-all-btn');
 const deleteSelectedBtn = document.getElementById('delete-selected-btn');
 
+const stopwatchTab = document.getElementById('stopwatch-tab');
+const timerTab = document.getElementById('timer-tab');
+const stopwatchSection = document.getElementById('stopwatch-section');
+const timerSection = document.getElementById('timer-section');
+
+const timerDisplay = document.getElementById('timer-display');
+const startTimerBtn = document.getElementById('start-timer-btn');
+const resetTimerBtn = document.getElementById('reset-timer-btn');
+const hoursInput = document.getElementById('hours');
+const minutesInput = document.getElementById('minutes');
+const secondsInput = document.getElementById('seconds');
+
 let isRunning = false;
 let startTime = 0;
 let elapsedTime = 0;
@@ -73,4 +85,72 @@ deleteSelectedBtn.addEventListener('click', () => {
   checked.forEach(cb => {
     cb.closest('.record-item').remove();
   });
+});
+
+
+stopwatchTab.addEventListener('click', () => {
+  stopwatchTab.classList.add('active');
+  timerTab.classList.remove('active');
+  stopwatchSection.classList.add('active');
+  timerSection.classList.remove('active');
+});
+
+timerTab.addEventListener('click', () => {
+  timerTab.classList.add('active');
+  stopwatchTab.classList.remove('active');
+  timerSection.classList.add('active');
+  stopwatchSection.classList.remove('active');
+});
+
+let timerInterval;
+let totalSeconds = 0;
+let isTimerRunning = false;
+
+function formatTimerTime(sec) {
+  const h = String(Math.floor(sec / 3600)).padStart(2, '0');
+  const m = String(Math.floor((sec % 3600) / 60)).padStart(2, '0');
+  const s = String(sec % 60).padStart(2, '0');
+  return `${h}:${m}:${s}`;
+}
+
+startTimerBtn.addEventListener('click', () => {
+  if (isTimerRunning) {
+    clearInterval(timerInterval);
+    isTimerRunning = false;
+    startTimerBtn.textContent = 'resume';
+    return;
+  }
+
+  if (totalSeconds <= 0) {
+    const h = parseInt(hoursInput.value) || 0;
+    const m = parseInt(minutesInput.value) || 0;
+    const s = parseInt(secondsInput.value) || 0;
+    totalSeconds = h * 3600 + m * 60 + s;
+  }
+
+  if (totalSeconds > 0) {
+    isTimerRunning = true;
+    startTimerBtn.textContent = 'pause';
+    timerInterval = setInterval(() => {
+      totalSeconds--;
+      timerDisplay.textContent = formatTimerTime(totalSeconds);
+      if (totalSeconds <= 0) {
+        clearInterval(timerInterval);
+        isTimerRunning = false;
+        startTimerBtn.textContent = 'start';
+        timerDisplay.textContent = "Times  Up!";
+      }
+    }, 1000);
+  }
+});
+
+resetTimerBtn.addEventListener('click', () => {
+  clearInterval(timerInterval);
+  isTimerRunning = false;
+  totalSeconds = 0;
+  hoursInput.value = '';
+  minutesInput.value = '';
+  secondsInput.value = '';
+  timerDisplay.textContent = '00:00:00';
+  startTimerBtn.textContent = 'start';
 });
