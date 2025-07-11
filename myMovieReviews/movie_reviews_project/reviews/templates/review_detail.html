@@ -20,7 +20,15 @@
 
   <hr>
   
-  {# 수정과 삭제 기능 추가 필요. #}
+  <a href="{% url 'review_update' movie.pk %}">✏️ 수정</a>
+
+  <form action="{% url 'review_delete' movie.pk %}" method="post" style="display: inline; margin-left: 10px;">
+    {% csrf_token %}
+    <button type="submit" onclick="return confirm('정말로 이 리뷰를 삭제하시겠습니까?');" style="background:none; border:none; color:red; cursor:pointer; padding:0; font-size: 1em;">🗑️ 삭제</button>
+  </form>
+  
+  <br><br>
+  <a href="{% url 'review_list' %}">← my Movie reviews 목록으로</a>
   <a href="#">✏️ 수정</a>
   <a href="#">🗑️ 삭제</a>
   <br><br>

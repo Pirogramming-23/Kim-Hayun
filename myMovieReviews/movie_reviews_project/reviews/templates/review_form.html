@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h2>{% if movie %}📝 리뷰 수정{% else %}📝 새 리뷰 작성{% endif %}</h2>
+  
+  <form method="post" action="">
+    {% csrf_token %}
+    
+    <p><strong>제목:</strong> <input type="text" name="title" value="{{ movie.title }}" placeholder="영화 제목" required></p>
+    <p><strong>개봉 연도:</strong> <input type="number" name="year" value="{{ movie.year }}" placeholder="예: 2023"></p>
+    <p><strong>장르:</strong> <input type="text" name="genre" value="{{ movie.genre }}" placeholder="예: 액션, 코미디"></p>
+    <p><strong>별점:</strong> <input type="number" name="stars" value="{{ movie.stars }}" step="0.5" min="0" max="5" placeholder="0.0 ~ 5.0"></p>
+    <p><strong>러닝타임(분):</strong> <input type="number" name="runtime" value="{{ movie.runtime }}" placeholder="예: 120"></p>
+    <p><strong>감독:</strong> <input type="text" name="director" value="{{ movie.director }}" placeholder="감독 이름"></p>
+    <p><strong>주연:</strong> <input type="text" name="actors" value="{{ movie.actors }}" placeholder="주요 배우"></p>
+    <p><strong>리뷰 내용:</strong></p>
+    <p><textarea name="review" rows="10" cols="50" placeholder="리뷰를 작성해주세요.">{{ movie.review }}</textarea></p>
+    
+    <button type="submit">💾 저장하기</button>
+  </form>
+  <br>
+
+  {% if movie %}
+    <a href="{% url 'review_detail' movie.pk %}">← 상세 페이지로 돌아가기</a>
+  {% else %}
+    <a href="{% url 'review_list' %}">← 목록으로 돌아가기</a>
+  {% endif %}
+{% endblock %}
