@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>🎬 {{ movie.title }} ({{ movie.year }})</h2>
+  
+  <div class="review-details">
+    <p><strong>장르:</strong> {{ movie.genre }}</p>
+    <p><strong>별점:</strong> ⭐ {{ movie.stars }}</p>
+    <p><strong>러닝타임:</strong> {{ movie.runtime }}분</p>
+    <p><strong>감독:</strong> {{ movie.director }}</p>
+    <p><strong>주연:</strong> {{ movie.actors }}</p>
+  </div>
+
+  <hr>
+  
+  <h4>리뷰 내용</h4>
+  <div class="review-content">
+    <p>{{ movie.review|linebreaksbr }}</p>
+  </div>
+
+  <hr>
+  
+  {# 수정과 삭제 기능 추가 필요. #}
+  <a href="#">✏️ 수정</a>
+  <a href="#">🗑️ 삭제</a>
+  <br><br>
+  <a href="{% url 'review_list' %}">← my Movie reviews 목록으로</a>
+{% endblock %}
