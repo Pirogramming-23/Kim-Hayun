@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>📃 전체 영화 리뷰 목록</h2>
+  <a href="{% url 'review_create' %}">➕ 새 리뷰 작성</a>
+  <ul>
+    {% for movie in movies %}
+      <li>
+        <a href="{% url 'review_detail' movie.pk %}">
+          {{ movie.title }}
+        </a> |
+        {{ movie.year }} | {{ movie.genre }} | ⭐ {{ movie.stars }}
+      </li>
+    {% empty %}
+      <li>아직 리뷰가 없습니다.</li>
+    {% endfor %}
+  </ul>
+{% endblock %}
