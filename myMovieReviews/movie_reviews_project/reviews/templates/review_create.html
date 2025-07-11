@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h2>📝 리뷰 작성</h2>
+  <form method="post">
+    {% csrf_token %}
+    <p><input type="text" name="title" placeholder="제목 입력"></p>
+    <p><textarea name="review" placeholder="리뷰 내용"></textarea></p>
+    <p><button type="submit">작성 완료</button></p>
+  </form>
+  <a href="{% url 'review_list' %}">← 리뷰 목록으로 돌아가기</a>
+{% endblock %}
