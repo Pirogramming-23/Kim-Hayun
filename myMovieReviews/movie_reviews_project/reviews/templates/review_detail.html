@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load review_extras %}
+
+{% block content %}
+  <div class="detail-header">
+    <h2 class="detail-title">{{ movie.title }} ({{ movie.year }})</h2>
+  </div>
+  
+  <div class="detail-meta">
+    <p><strong>장르</strong> {{ movie.genre }}</p>
+    <p><strong>별점</strong> ⭐ {{ movie.stars }}</p>
+    <p><strong>러닝타임</strong> 🕒 {{ movie.runtime|format_runtime }}</p>
+    <p><strong>감독</strong> {{ movie.director }}</p>
+    <p><strong>주연</strong> {{ movie.actors }}</p>
+  </div>
+
+  <hr>
+  
+  <h4>리뷰 내용</h4>
+  <div class="review-content">
+    <p>{{ movie.review|linebreaksbr }}</p>
+  </div>
+
+  <div class="action-buttons">
+    <a href="{% url 'review_update' movie.pk %}" class="btn btn-secondary">✏️ 수정</a>
+    <form action="{% url 'review_delete' movie.pk %}" method="post" style="display: inline;">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-secondary" style="background-color: #5c2c2c; color: #ffc2c2;" onclick="return confirm('정말로 이 리뷰를 삭제하시겠습니까?');">🗑️ 삭제</button>
+    </form>
+  </div>
+
+  <hr>
+  <a href="{% url 'review_list' %}">← 목록으로 돌아가기</a>
+{% endblock %}

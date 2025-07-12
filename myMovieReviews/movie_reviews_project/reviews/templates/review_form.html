@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h2>{% if movie %}📝 리뷰 수정{% else %}📝 새 리뷰 작성{% endif %}</h2>
+  
+  <form method="post" action="">
+    {% csrf_token %}
+    
+    <div class="form-group">
+        <label for="title">제목</label>
+        <input id="title" type="text" name="title" value="{{ movie.title }}" required>
+    </div>
+    <div class="form-group">
+        <label for="year">개봉 연도</label>
+        <input id="year" type="number" name="year" value="{{ movie.year }}">
+    </div>
+    <div class="form-group">
+        <label for="genre">장르</label>
+        <input id="genre" type="text" name="genre" value="{{ movie.genre }}">
+    </div>
+    <div class="form-group">
+        <label for="stars">별점</label>
+        <input id="stars" type="number" name="stars" value="{{ movie.stars }}" step="0.5" min="0" max="5">
+    </div>
+    <div class="form-group">
+        <label for="runtime">러닝타임 (분 단위)</label>
+        <input id="runtime" type="number" name="runtime" value="{{ movie.runtime }}" placeholder="예: 148">
+    </div>
+    <div class="form-group">
+        <label for="director">감독</label>
+        <input id="director" type="text" name="director" value="{{ movie.director }}">
+    </div>
+    <div class="form-group">
+        <label for="actors">주연</label>
+        <input id="actors" type="text" name="actors" value="{{ movie.actors }}">
+    </div>
+    <div class="form-group">
+        <label for="review">리뷰 내용</label>
+        <textarea id="review" name="review" rows="8">{{ movie.review }}</textarea>
+    </div>
+    
+    <div class="form-actions">
+        {% if movie %}
+            <a href="{% url 'review_detail' movie.pk %}" class="btn btn-secondary">← 뒤로가기</a>
+        {% else %}
+            <a href="{% url 'review_list' %}" class="btn btn-secondary">← 목록으로</a>
+        {% endif %}
+        <button type="submit" class="btn btn-primary">💾 저장하기</button>
+    </div>
+  </form>
+{% endblock %}
