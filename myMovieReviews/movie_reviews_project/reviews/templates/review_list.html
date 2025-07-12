@@ -1,18 +1,27 @@
 {% extends 'base.html' %}
+{% load review_extras %}
 
 {% block content %}
-  <h2>📃 전체 영화 리뷰 목록</h2>
-  <a href="{% url 'review_create' %}">➕ 새 리뷰 작성</a>
-  <ul>
+  <div style="display: flex; justify-content: space-between; align-items: center;">
+    <h2>📃 전체 영화 리뷰 목록</h2>
+    <a href="{% url 'review_create' %}" class="btn btn-primary">➕ 새 리뷰 작성</a>
+  </div>
+  <hr>
+  <ul class="review-list">
     {% for movie in movies %}
       <li>
         <a href="{% url 'review_detail' movie.pk %}">
-          {{ movie.title }}
-        </a> |
-        {{ movie.year }} | {{ movie.genre }} | ⭐ {{ movie.stars }}
+          <span class="review-list-title">{{ movie.title }}</span>
+        </a>
+        <div class="review-list-meta">
+          <span>{{ movie.year }}</span> |
+          <span>{{ movie.genre }}</span> |
+          <span>⭐ {{ movie.stars }}</span> |
+          <span>🕒 {{ movie.runtime|format_runtime }}</span>
+        </div>
       </li>
     {% empty %}
-      <li>아직 리뷰가 없습니다.</li>
+      <li>아직 작성된 리뷰가 없습니다. 첫 리뷰를 작성해보세요!</li>
     {% endfor %}
   </ul>
 {% endblock %}

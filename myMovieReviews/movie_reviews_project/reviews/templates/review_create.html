@@ -1,22 +1,60 @@
 {% extends "base.html" %}
 
 {% block content %}
+<div class="form-container">
   <h2>📝 새 리뷰 작성</h2>
+  <hr>
   <form method="post" action="{% url 'review_create' %}">
     {% csrf_token %}
     
-    <p><strong>제목:</strong> <input type="text" name="title" placeholder="영화 제목" required></p>
-    <p><strong>개봉 연도:</strong> <input type="number" name="year" placeholder="예: 2023"></p>
-    <p><strong>장르:</strong> <input type="text" name="genre" placeholder="예: 액션, 코미디"></p>
-    <p><strong>별점:</strong> <input type="number" name="stars" step="0.5" min="0" max="5" placeholder="0.0 ~ 5.0"></p>
-    <p><strong>러닝타임(분):</strong> <input type="number" name="runtime" placeholder="예: 120"></p>
-    <p><strong>감독:</strong> <input type="text" name="director" placeholder="감독 이름"></p>
-    <p><strong>주연:</strong> <input type="text" name="actors" placeholder="주요 배우"></p>
-    <p><strong>리뷰 내용:</strong></p>
-    <p><textarea name="review" rows="10" cols="50" placeholder="리뷰를 작성해주세요."></textarea></p>
-    
-    <button type="submit">💾 저장하기</button>
+    <div class="form-grid">
+      
+      <div class="form-group">
+          <label for="title">영화 제목</label>
+          <input id="title" type="text" name="title" placeholder="영화 제목" required>
+      </div>
+
+      <div class="form-group">
+          <label for="director">감독</label>
+          <input id="director" type="text" name="director" placeholder="감독 이름">
+      </div>
+      
+      <div class="form-group">
+          <label for="year">개봉 연도</label>
+          <input id="year" type="number" name="year" placeholder="예: 2023">
+      </div>
+
+      <div class="form-group">
+          <label for="genre">장르</label>
+          <input id="genre" type="text" name="genre" placeholder="예: 액션, 코미디">
+      </div>
+
+      <div class="form-group">
+          <label for="stars">별점 (0~5)</label>
+          <input id="stars" type="number" name="stars" step="0.5" min="0" max="5" placeholder="0.0 ~ 5.0">
+      </div>
+
+      <div class="form-group">
+          <label for="runtime">러닝타임 (분)</label>
+          <input id="runtime" type="number" name="runtime" placeholder="예: 120">
+      </div>
+
+      <div class="form-group full-width">
+          <label for="actors">주요 출연진</label>
+          <input id="actors" type="text" name="actors" placeholder="주요 배우">
+      </div>
+
+      <div class="form-group full-width">
+          <label for="review">리뷰</label>
+          <textarea id="review" name="review" rows="8" placeholder="리뷰를 작성해주세요."></textarea>
+      </div>
+
+      <div class="form-actions full-width">
+          <a href="{% url 'review_list' %}" class="btn btn-secondary">← 목록으로</a>
+          <button type="submit" class="btn btn-primary">💾 저장하기</button>
+      </div>
+
+    </div>
   </form>
-  <br>
-  <a href="{% url 'review_list' %}">← 목록으로 돌아가기</a>
+</div>
 {% endblock %}
