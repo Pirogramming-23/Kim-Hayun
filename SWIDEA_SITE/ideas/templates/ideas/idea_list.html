@@ -5,7 +5,8 @@
 
 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
     <div>
-        <a href="{% url 'ideas:idea_create' %}" role="button">💡 새 아이디어 등록</a>
+        <a href="{% url 'ideas:idea_create' %}" class="btn btn-primary">💡 새 아이디어 등록</a>
+        <a href="{% url 'devtools:devtool_list' %}" class="btn btn-secondary">🧰 개발툴 목록 보기</a>
     </div>
     <div>
         <strong>정렬:</strong>

@@ -4,7 +4,7 @@ from devtools.models import DevTool
 
 class Idea(models.Model):
     title = models.CharField('제목', max_length=200)
-    image = models.ImageField('이미지', blank=True, null=True, upload_to='ideas/%Y/%m/%d')
+    #image = models.ImageField('이미지', blank=True, null=True, upload_to='ideas/%Y/%m/%d')
     content = models.TextField('내용')
     interest = models.IntegerField('관심도', default=0)
     devtool = models.ForeignKey(DevTool, on_delete=models.SET_NULL, null=True, verbose_name='개발툴')

@@ -16,6 +16,26 @@
           <a href="{% url 'accounts:signup' %}">회원가입</a>
       {% endif %}
   </div>
-  {% block content %}{% endblock %}
+  <header class="main-header">
+      <div class="container">
+          <div class="logo">
+              <a href="{% url 'ideas:idea_list' %}">SWIDEA</a>
+          </div>
+          <nav>
+              {% if user.is_authenticated %}
+                  <span>환영합니다, <strong>{{ user.username }}</strong>님!</span>
+                  <a href="{% url 'accounts:logout' %}">로그아웃</a>
+              {% else %}
+                  <a href="{% url 'accounts:login' %}">로그인</a>
+                  <a href="{% url 'accounts:signup' %}">회원가입</a>
+              {% endif %}
+          </nav>
+      </div>
+  </header>
+
+  <main class="container">
+      {% block content %}
+      {% endblock %}
+  </main>
 </body>
 </html>

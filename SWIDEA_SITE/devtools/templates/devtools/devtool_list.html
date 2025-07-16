@@ -2,7 +2,8 @@
 {% block title %}개발툴 목록{% endblock %}
 {% block content %}
 <h1>🧰 개발툴 목록</h1>
-<a href="{% url 'devtools:devtool_create' %}">➕ 새 개발툴 등록</a>
+    <a href="{% url 'devtools:devtool_create' %}">➕ 새 개발툴 등록</a>
+    <a href="{% url 'ideas:idea_list' %}" class="btn btn-secondary">💡 아이디어 목록 보기</a>
 <hr>
 <ul>
     {% for devtool in devtools %}
