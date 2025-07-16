@@ -1,11 +1,23 @@
-{% extends 'base.html' %} 
+{% extends 'base.html' %}
 
 {% block content %}
 <h1>🏠 아이디어 목록</h1>
-<a href="{% url 'ideas:idea_create' %}">💡 새 아이디어 등록</a>
-<hr>
+
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+    <div>
+        <a href="{% url 'ideas:idea_create' %}" role="button">💡 새 아이디어 등록</a>
+    </div>
+    <div>
+        <strong>정렬:</strong>
+        <a href="{% url 'ideas:idea_list' %}?sort=latest">최신순</a> |
+        <a href="{% url 'ideas:idea_list' %}?sort=stars">찜하기순</a> |
+        <a href="{% url 'ideas:idea_list' %}?sort=name">이름순</a> |
+        <a href="{% url 'ideas:idea_list' %}?sort=interest">관심도순</a>
+    </div>
+</div>
+
 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-    {% for idea in ideas %}
+    {% for idea in page_obj %}
     <div class="card" style="border: 1px solid #ddd; padding: 15px; border-radius: 8px;">
         <a href="{% url 'ideas:idea_detail' idea.pk %}">
             {% if idea.image %}
@@ -18,10 +30,83 @@
             <h5 class="card-title" style="margin-top: 10px;">
                 <a href="{% url 'ideas:idea_detail' idea.pk %}">{{ idea.title }}</a>
             </h5>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 15px;">
+                <div>
+                    관심도: <strong id="interest-{{ idea.pk }}">{{ idea.interest }}</strong>
+                    <button class="interest-btn" data-id="{{ idea.pk }}" data-action="decrease" style="border-radius: 50%; width: 25px; height: 25px;">-</button>
+                    <button class="interest-btn" data-id="{{ idea.pk }}" data-action="increase" style="border-radius: 50%; width: 25px; height: 25px;">+</button>
+                </div>
+                <div>
+                    <button class="star-btn" data-id="{{ idea.pk }}" style="border: none; background: none; font-size: 24px; cursor: pointer;">
+                        {% if user.is_authenticated and idea in user.ideastar_set.all.ideas %}
+                            ⭐️
+                        {% else %}
+                            ☆
+                        {% endif %}
+                    </button>
+                    <span id="star-count-{{ idea.pk }}">{{ idea.ideastar_set.count }}</span>
+                </div>
+            </div>
         </div>
     </div>
     {% empty %}
         <p>등록된 아이디어가 없습니다.</p>
     {% endfor %}
 </div>
+
+<div class="pagination" style="text-align: center; margin-top: 20px;">
+    {% if page_obj.has_previous %}
+        <a href="?page=1&sort={{ sort_by }}">&laquo; 처음</a>
+        <a href="?page={{ page_obj.previous_page_number }}&sort={{ sort_by }}">이전</a>
+    {% endif %}
+
+    <span>
+        페이지 {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
+    </span>
+
+    {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}&sort={{ sort_by }}">다음</a>
+        <a href="?page={{ page_obj.paginator.num_pages }}&sort={{ sort_by }}">마지막 &raquo;</a>
+    {% endif %}
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const csrftoken = '{{ csrf_token }}';
+
+    document.querySelectorAll('.star-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const ideaId = this.dataset.id;
+            fetch(`/ideas/${ideaId}/toggle_star/`)
+                .then(response => response.json())
+                .then(data => {
+                    this.innerHTML = data.is_starred ? '⭐️' : '☆';
+                    document.getElementById(`star-count-${ideaId}`).innerText = data.star_count;
+                })
+                .catch(error => console.error('Error:', error));
+        });
+    });
+
+    document.querySelectorAll('.interest-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const ideaId = this.dataset.id;
+            const action = this.dataset.action;
+            
+            fetch(`/ideas/${ideaId}/adjust_interest/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': csrftoken,
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: `action=${action}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById(`interest-${ideaId}`).innerText = data.interest;
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    });
+});
+</script>
 {% endblock %}

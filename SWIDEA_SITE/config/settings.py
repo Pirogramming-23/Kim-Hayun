@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'ideas',
     'devtools',
+    'accounts',
 ]
 
 MIDDLEWARE = [
@@ -122,3 +123,9 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+LOGIN_REDIRECT_URL = '/ideas/'
+LOGOUT_REDIRECT_URL = '/ideas/'
+
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',
+]

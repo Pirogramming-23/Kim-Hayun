@@ -1,14 +1,66 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
+from django.db.models import Count
+from django.core.paginator import Paginator
 from .models import Idea, IdeaStar
 from .forms import IdeaForm
 
 # 아이디어 목록
 def idea_list(request):
-    ideas = Idea.objects.all().order_by('-pk') # 최신순으로 정렬
-    context = {'ideas': ideas}
+    sort_by = request.GET.get('sort', 'latest')
+
+    if sort_by == 'name':
+        ideas = Idea.objects.all().order_by('title')
+    elif sort_by == 'interest':
+        ideas = Idea.objects.all().order_by('-interest', '-pk')
+    elif sort_by == 'stars':
+        ideas = Idea.objects.annotate(star_count=Count('ideastar')).order_by('-star_count', '-pk')
+    else:
+        ideas = Idea.objects.all().order_by('-pk')
+
+    paginator = Paginator(ideas, 4)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    context = {
+        'page_obj': page_obj,
+        'sort_by': sort_by,
+    }
     return render(request, 'ideas/idea_list.html', context)
 
+@login_required
+def toggle_star(request, pk):
+    idea = get_object_or_404(Idea, pk=pk)
+    user = request.user
+    
+    try:
+        star = IdeaStar.objects.get(user=user, idea=idea)
+        star.delete()
+        is_starred = False
+    except IdeaStar.DoesNotExist:
+        IdeaStar.objects.create(user=user, idea=idea)
+        is_starred = True
+        
+    star_count = idea.ideastar_set.count()
+
+    return JsonResponse({'is_starred': is_starred, 'star_count': star_count})
+
+@login_required
+def adjust_interest(request, pk):
+    if request.method == 'POST':
+        idea = get_object_or_404(Idea, pk=pk)
+        action = request.POST.get('action')
+
+        if action == 'increase':
+            idea.interest += 1
+        elif action == 'decrease' and idea.interest > 0:
+            idea.interest -= 1
+        
+        idea.save()
+        return JsonResponse({'interest': idea.interest})
+
+    return JsonResponse({'status': 'error', 'message': 'Invalid request'}, status=400)
 # 아이디어 등록
 @login_required
 def idea_create(request):
