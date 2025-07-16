@@ -7,15 +7,7 @@
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
-  <div style="padding: 10px; background-color: #f0f0f0; margin-bottom: 20px; text-align: right;">
-      {% if user.is_authenticated %}
-          <span>환영합니다, <strong>{{ user.username }}</strong>님!</span>
-          <a href="{% url 'accounts:logout' %}">로그아웃</a>
-      {% else %}
-          <a href="{% url 'accounts:login' %}">로그인</a>
-          <a href="{% url 'accounts:signup' %}">회원가입</a>
-      {% endif %}
-  </div>
+  
   <header class="main-header">
       <div class="container">
           <div class="logo">
