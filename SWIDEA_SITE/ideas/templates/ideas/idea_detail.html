@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>🔍 아이디어 상세 정보</h1>
+
+<p><strong>제목:</strong> {{ idea.title }}</p>
+<p><strong>작성자:</strong> {{ idea.author.username }}</p>
+<p><strong>관심도:</strong> {{ idea.interest }}</p>
+
+{% if idea.image %}
+    <img src="{{ idea.image.url }}" alt="{{ idea.title }}" style="max-width: 500px; margin-top: 10px;">
+{% endif %}
+
+<p style="margin-top: 20px;"><strong>내용:</strong></p>
+<div style="border: 1px solid #ccc; padding: 10px; min-height: 100px;">
+    {{ idea.content|linebreaksbr }}
+</div>
+
+{% if idea.devtool %}
+<p style="margin-top: 20px;">
+    <strong>사용 개발툴:</strong> <a href="{% url 'devtools:devtool_detail' idea.devtool.pk %}">{{ idea.devtool.name }}</a>
+</p>
+{% endif %}
+
+<p style="margin-top: 20px;"><strong>찜:</strong> <span id="star-status">{% if is_starred %}⭐️{% else %}☆{% endif %}</span></p>
+<hr>
+
+<a href="{% url 'ideas:idea_list' %}" role="button">목록</a>
+{% if user == idea.author %}
+    <a href="{% url 'ideas:idea_update' idea.pk %}" role="button">수정</a>
+    <a href="{% url 'ideas:idea_delete' idea.pk %}" onclick="return confirm('정말 삭제하시겠습니까?');" role="button">삭제</a>
+{% endif %}
+
+{% endblock %}

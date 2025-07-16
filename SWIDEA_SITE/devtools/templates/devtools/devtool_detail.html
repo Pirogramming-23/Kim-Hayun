@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
-{% block title %}개발툴 상세{% endblock %}
-
+{% block title %}개발툴 상세 정보{% endblock %}
 {% block content %}
 <h1>🔎 개발툴 상세 정보</h1>
+
 <p><strong>이름:</strong> {{ devtool.name }}</p>
 <p><strong>종류:</strong> {{ devtool.kind }}</p>
 <p><strong>설명:</strong></p>
@@ -11,10 +11,12 @@
 </div>
 
 {% if devtool.image %}
-  <p><strong>이미지:</strong></p>
-  <img src="{{ devtool.image.url }}" alt="{{ devtool.name }}" width="300">
+    <p><strong>이미지:</strong></p>
+    <img src="{{ devtool.image.url }}" alt="{{ devtool.name }}" width="300">
 {% endif %}
 
 <hr>
 <a href="{% url 'devtools:devtool_update' devtool.pk %}">✏️ 수정</a>
-<a href="{% url 'devtools:devtool_delete' devtool.pk %}" onclick="return confirm('정말 삭제하시겠습니까?');">
+<a href="{% url 'devtools:devtool_delete' devtool.pk %}" onclick="return confirm('정말 삭제하시겠습니까?');">🗑️ 삭제</a>
+<a href="{% url 'devtools:devtool_list' %}">📋 목록</a>
+{% endblock %}
