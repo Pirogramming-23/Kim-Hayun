@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %}{% if devtool %}개발툴 수정{% else %}개발툴 등록{% endif %}{% endblock %}
+
+{% block content %}
+{% if devtool %}
+    <h1>🛠️ 개발툴 수정</h1>
+{% else %}
+    <h1>➕ 개발툴 등록</h1>
+{% endif %}
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">저장</button>
+</form>
+<br>
+<a href="{% url 'devtools:devtool_list' %}">목록으로 돌아가기</a>
+{% endblock %}
