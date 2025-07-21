@@ -90,11 +90,14 @@
         </div>
         <div class="comment-section">
               <ul class="comment-list" id="comment-list-{{ post.id }}">
-                  {% for comment in post.comments.all %}
-                  <li id="comment-{{ comment.id }}">
-                      <strong>{{ comment.author.username }}</strong>: {{ comment.content }}
-                  </li>
-                  {% endfor %}
+                  	{% for comment in post.comments.all %}
+                  	<li id="comment-{{ comment.id }}">
+                      	<strong>{{ comment.author.username }}</strong>: {{ comment.content }}
+						{% if user == comment.author %}
+							<button class="delete-comment-btn" data-comment-id="{{ comment.id }}">삭제</button>
+						{% endif %}
+					</li>
+                  	{% endfor %}
               </ul>
               {% if user.is_authenticated %}
               <form class="comment-form" data-post-id="{{ post.id }}">

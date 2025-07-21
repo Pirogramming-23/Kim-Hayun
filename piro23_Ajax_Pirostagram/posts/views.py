@@ -90,3 +90,13 @@ def create_comment(request, post_id):
             'content': comment.content,
         }
     })
+    
+@login_required
+@require_POST
+def delete_comment(request, comment_id):
+    comment = get_object_or_404(Comment, pk=comment_id)
+    if request.user != comment.author:
+        return JsonResponse({'status': 'error', 'message': '삭제 권한이 없습니다.'}, status=403)
+    
+    comment.delete()
+    return JsonResponse({'status': 'ok'})
