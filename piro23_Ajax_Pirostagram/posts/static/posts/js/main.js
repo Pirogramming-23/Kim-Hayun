@@ -42,9 +42,47 @@ document.addEventListener('DOMContentLoaded', () => {
                     alert('좋아요 기능에 문제가 발생했습니다.');
                 });
             });
+
         });
+
     };
 
     addLikeButtonListeners();
+    document.querySelectorAll('.comment-form').forEach(form => {
+        form.addEventListener('submit', event => {
+            event.preventDefault();
+
+            const postId = event.currentTarget.dataset.postId;
+            const input = event.currentTarget.querySelector('input[name="content"]');
+            const content = input.value;
+
+            if (!content.trim()) {
+                alert('댓글 내용을 입력하세요.');
+                return;
+            }
+
+            const url = `/posts/${postId}/comment/`;
+
+            fetch(url, {
+                method: 'POST',
+                headers: headers,
+                body: JSON.stringify({ content: content }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'ok') {
+                    const commentList = document.getElementById(`comment-list-${postId}`);
+                    const newComment = document.createElement('li');
+                    newComment.id = `comment-${data.comment.id}`;
+                    newComment.innerHTML = `<strong>${data.comment.author}</strong>: ${data.comment.content}`;
+                    commentList.appendChild(newComment);
+                    input.value = '';
+                } else {
+                    alert(data.message || '댓글 작성에 실패했습니다.');
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    });
 
 });

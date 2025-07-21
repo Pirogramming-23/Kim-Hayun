@@ -13,12 +13,12 @@ class Post(models.Model):
     def like_count(self):
         return self.likes.count()
 
-# # 댓글 모델
-# class Comment(models.Model):
-#     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
-#     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-#     content = models.CharField(max_length=200)
-#     created_at = models.DateTimeField(auto_now_add=True)
+# 댓글 모델
+class Comment(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    content = models.CharField(max_length=200)
+    created_at = models.DateTimeField(auto_now_add=True)
 
-#     def __str__(self):
-#         return f'{self.author} - {self.content}'
+    def __str__(self):
+        return f'{self.author} - {self.content}'

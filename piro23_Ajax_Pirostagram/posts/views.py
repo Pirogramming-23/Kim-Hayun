@@ -1,8 +1,9 @@
+import json
 from django.http import JsonResponse
 from django.shortcuts import render,redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
-from .models import Post
+from .models import Post, Comment
 from .forms import PostForm
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
@@ -64,3 +65,28 @@ def signup(request):
         'form': form,
     }
     return render(request, 'registration/signup.html', context)
+
+@login_required
+@require_POST
+def create_comment(request, post_id):
+    post = get_object_or_404(Post, pk=post_id)
+    data = json.loads(request.body)
+    content = data.get('content')
+
+    if not content:
+        return JsonResponse({'status': 'error', 'message': '댓글 내용이 없습니다.'}, status=400)
+
+    comment = Comment.objects.create(
+        post=post,
+        author=request.user,
+        content=content
+    )
+
+    return JsonResponse({
+        'status': 'ok',
+        'comment': {
+            'id': comment.id,
+            'author': comment.author.username,
+            'content': comment.content,
+        }
+    })

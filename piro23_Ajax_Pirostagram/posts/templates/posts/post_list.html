@@ -88,6 +88,22 @@
             
             <span id="like-count-{{ post.id }}" class="like-count">{{ post.like_count }}</span>
         </div>
+        <div class="comment-section">
+              <ul class="comment-list" id="comment-list-{{ post.id }}">
+                  {% for comment in post.comments.all %}
+                  <li id="comment-{{ comment.id }}">
+                      <strong>{{ comment.author.username }}</strong>: {{ comment.content }}
+                  </li>
+                  {% endfor %}
+              </ul>
+              {% if user.is_authenticated %}
+              <form class="comment-form" data-post-id="{{ post.id }}">
+                  <input type="text" name="content" placeholder="댓글 달기..." required>
+                  <button type="submit">게시</button>
+              </form>
+              {% endif %}
+        </div>
+    
     </div>
     {% endfor %}
 
