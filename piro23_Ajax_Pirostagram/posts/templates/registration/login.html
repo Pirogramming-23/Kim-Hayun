@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>로그인</title>
+    <style>
+        body { font-family: sans-serif; background-color: #fafafa; display: flex; justify-content: center; padding-top: 100px; }
+        .container { max-width: 400px; width: 100%; padding: 30px; background-color: white; border: 1px solid #dbdbdb; border-radius: 8px; }
+        h1 { text-align: center; }
+        form { display: flex; flex-direction: column; gap: 15px; }
+        input { padding: 12px; border: 1px solid #dbdbdb; border-radius: 5px; }
+        button { padding: 12px; background-color: #0095f6; color: white; border: none; cursor: pointer; border-radius: 5px; font-weight: 600; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Pirostagram 로그인</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">로그인</button>
+        </form>
+        <div class="auth-link">
+            <p>계정이 없으신가요? <a href="{% url 'signup' %}">가입하기</a></p>
+        </div>
+    </div>
+</body>
+</html>

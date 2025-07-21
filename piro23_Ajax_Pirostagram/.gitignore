@@ -1,0 +1,59 @@
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+*.pdb
+*.egg-info/
+*.egg
+*.log
+
+# Virtual Environment
+venv/
+ENV/
+env/
+.venv/
+.VENV/
+.Venv/
+
+# Django Migrations
+**/migrations/
+!**/migrations/__init__.py
+
+# VSCode
+.vscode/
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+desktop.ini
+
+# Pip files
+pip-log.txt
+
+# IDEs
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# coverage/testing
+htmlcov/
+coverage.xml
+*.cover
+.tox/
+.nox/
+
+# database
+*.sqlite3
+db.sqlite3
+
+# Static/media (optional)
+staticfiles/
+media/
