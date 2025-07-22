@@ -1,0 +1,23 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>로그인</title>
+    <link rel="stylesheet" href="{% static 'posts/css/style.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lobster&display=swap">
+</head>
+<body>
+    <div class="container">
+        <h1>새 게시물 작성</h1>
+        <form method="post">
+            {% csrf_token %}
+            
+            {{ form.as_p }}
+            
+            <button type="submit">게시하기</button>
+        </form>
+        <a href="{% url 'posts:post_list' %}">목록으로 돌아가기</a>
+    </div>
+</body>
+</html>

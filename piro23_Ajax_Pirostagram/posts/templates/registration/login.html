@@ -1,0 +1,23 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>로그인</title>
+    <link rel="stylesheet" href="{% static 'posts/css/style.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lobster&display=swap">
+</head>
+<body>
+    <div class="container">
+        <h1>Pirostagram 로그인</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">로그인</button>
+        </form>
+        <div class="auth-link">
+            <p>계정이 없으신가요? <a href="{% url 'signup' %}">가입하기</a></p>
+        </div>
+    </div>
+</body>
+</html>
